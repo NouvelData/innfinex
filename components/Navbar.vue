@@ -26,10 +26,22 @@
 
         <!-- Right section -->
         <div class="flex items-center space-x-4">
-          <UiButton variant="ghost" size="sm" @click="navigateTo('/login')"
-            >Log In</UiButton
-          >
-          <UiButton size="sm" @click="navigateTo('/signup')">Sign Up</UiButton>
+          <template v-if="auth.isAuthenticated">
+            <span class="text-sm text-muted-foreground">{{
+              auth.user?.name
+            }}</span>
+            <UiButton variant="ghost" size="sm" @click="handleLogout"
+              >Log Out</UiButton
+            >
+          </template>
+          <template v-else>
+            <UiButton variant="ghost" size="sm" @click="navigateTo('/login')"
+              >Log In</UiButton
+            >
+            <UiButton size="sm" @click="navigateTo('/signup')"
+              >Sign Up</UiButton
+            >
+          </template>
         </div>
 
         <!-- Mobile menu button -->
@@ -76,10 +88,17 @@
 
 <script setup lang="ts">
 import { useRouter } from "nuxt/app";
+import { useAuthStore } from "~/stores/auth";
 
 const router = useRouter();
+const auth = useAuthStore();
 const navigateTo = (path: string) => {
   router.push(path);
+};
+
+const handleLogout = async () => {
+  await auth.logout();
+  navigateTo("/");
 };
 
 const navigation = [
