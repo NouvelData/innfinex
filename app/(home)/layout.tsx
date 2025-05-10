@@ -1,17 +1,11 @@
-import { NavBar } from "@/components/Navbar"
-import { Footer } from "@/components/footer"
+import { NavBar } from '@/components/Navbar'
+import { Footer } from '@/components/Footer'
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <NavBar />
-            <main className="pt-16 bg-gray-900 flex flex-col min-h-screen">
-                {children}
-            </main>
+            <main className="bg-gray-900 pt-16">{children}</main>
             <Footer />
         </>
     )

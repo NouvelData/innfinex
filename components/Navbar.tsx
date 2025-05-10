@@ -1,16 +1,18 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { Input } from "@/components/ui/input"
-import { Search, UserCircle2 } from "lucide-react"
-import { useUser } from "@/context/user-context"
-import { useRouter, usePathname } from "next/navigation"
+import Link from 'next/link'
+import { Search, UserCircle2 } from 'lucide-react'
+import { useRouter, usePathname } from 'next/navigation'
+
+import { Input } from '@/components/ui/input'
+import { useUser } from '@/context/user-context'
+
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 
 export function NavBar() {
     const { user, loading, setUser } = useUser()
@@ -18,21 +20,21 @@ export function NavBar() {
     const pathname = usePathname()
 
     const handleLogout = async () => {
-        const response = await fetch("/api/auth/logout", { method: "POST" })
+        const response = await fetch('/api/auth/logout', { method: 'POST' })
         if (response.ok) {
             setUser(null)
-            router.push("/")
+            router.push('/')
         }
     }
 
-    const isAuthPage = pathname === "/login" || pathname === "/signup"
+    const isAuthPage = pathname === '/login' || pathname === '/signup'
     const showActionButtons = !loading && !isAuthPage
-    const isDashboardRoute = pathname.startsWith("/dashboard")
+    const isDashboardRoute = pathname.startsWith('/dashboard')
 
     return (
         <nav
             className={`${
-                isDashboardRoute ? "sticky" : "fixed"
+                isDashboardRoute ? 'sticky' : 'fixed'
             } top-0 w-full z-50 bg-black/50 backdrop-blur-sm border-b border-gray-800`}
         >
             <div className="container mx-auto px-4 h-16 flex items-center justify-between relative">
@@ -57,22 +59,15 @@ export function NavBar() {
                     <div className="flex items-center gap-6">
                         <div className="hidden md:flex items-center gap-6">
                             <Link
-                                href="/task"
+                                href="/trayner-vault"
                                 className="text-gray-300 hover:text-white"
                             >
+                                Trayner Vault
+                            </Link>
+                        </div>
+                        <div className="hidden md:flex items-center gap-6">
+                            <Link href="/task" className="text-gray-300 hover:text-white">
                                 Explore Tasks
-                            </Link>
-                            <Link
-                                href="/community"
-                                className="text-gray-300 hover:text-white"
-                            >
-                                Community
-                            </Link>
-                            <Link
-                                href="/research"
-                                className="text-gray-300 hover:text-white"
-                            >
-                                Research
                             </Link>
                         </div>
                         {showActionButtons && (
@@ -90,25 +85,21 @@ export function NavBar() {
                                         <DropdownMenu>
                                             <DropdownMenuTrigger className="text-gray-300 hover:text-white flex items-center gap-2">
                                                 <UserCircle2 className="h-5 w-5" />
-                                                <span>
-                                                    {user?.name || "Guest"}
-                                                </span>
+                                                <span>{user?.name || 'Guest'}</span>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent
                                                 align="end"
                                                 className="w-48 bg-gray-900 border border-gray-800 shadow-lg rounded-md absolute right-0 mt-2"
                                                 style={{
-                                                    width: "auto",
-                                                    maxWidth: "12rem",
+                                                    width: 'auto',
+                                                    maxWidth: '12rem',
                                                 }}
                                             >
                                                 <DropdownMenuItem
                                                     asChild
                                                     className="cursor-pointer hover:bg-gray-800 focus:bg-gray-800 text-gray-300 hover:text-white focus:text-white"
                                                 >
-                                                    <Link href="/settings">
-                                                        Settings
-                                                    </Link>
+                                                    <Link href="/settings">Settings</Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem
                                                     onClick={handleLogout}
